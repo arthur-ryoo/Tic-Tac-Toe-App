@@ -51,14 +51,39 @@ function handleClick(evt) {
   if (gameboard[selectedIndex]) return;
   gameboard[selectedIndex] = turn;
   turn *= -1;
+  winner = checkWinner();
+  console.log(winner);
   render();
 }
 
+function checkWinner() {
+  for (let i = 0; i < COMBOS.length; i++) {
+    if (
+      Math.abs(
+        gameboard[COMBOS[i][0]] +
+          gameboard[COMBOS[i][1]] +
+          gameboard[COMBOS[i][2]]
+      ) === 3
+    )
+      return gameboard[COMBOS[i][0]];
+  }
+  if (gameboard.includes(null)) return false;
+  return 'T';
+}
+
+// Output
+
 function render() {
-  // loop through the gameboard array
   gameboard.forEach(function(elem, index) {
     squares[index].textContent = KEY[elem];
   });
-  message.textContent = `${KEY[turn]}'s Turn`;
-  // inside the loop you need to take each value
+
+  if (!winner) {
+    message.textContent = `${KEY[turn]}'s Turn`;
+  } else if (winner === 'T') {
+    message.textContent = 'Tied Game';
+  } else {
+    message.textContent = `${KEY[winner]} won the game!`;
+  }
 }
+render();
