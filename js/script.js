@@ -49,4 +49,13 @@ function handleClick(evt) {
   const selectedIndex = parseInt(evt.target.dataset.index);
   gameboard[selectedIndex] = turn;
   turn *= -1;
+  render();
+}
+
+function render() {
+  // loop through the gameboard array
+  gameboard.forEach(function(elem, index) {
+    squares[index].textContent = KEY[elem];
+  });
+  // inside the loop you need to take each value
 }
